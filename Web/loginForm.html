@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="./img/logotitle.svg" />
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>CinemaS</title>
+</head>
+<body>
+<div id="main">
+    <div ng-controller="loginController" class="ng-scope">
+        <div id="login-modal" class="modal fade in" style="display: block; padding-right: 16px;"><!-- ngIf: openLogin -->
+            <div ng-if="openLogin" class="modal-dialog ng-scope">
+                <div class="modal-outer-container">
+                    <div class="modal-middle-container">
+                        <div class="login-wrapper animated slideInDown">
+                            <div class="login-container">
+                                <span ng-click="closeModel()" class="close">
+                                    <i class="icon-cancel"></i>
+                                </span>
+                                <div class="tab-login-line">
+                                    <ul class="nav nav-tabs"><li class="active"><a id="a_tab_login_1" href="#tab_login_1" data-toggle="tab" aria-expanded="true">Đăng nhập</a></li><li><a class="line">/</a></li><li class=""><a id="a_tab_login_2" href="#tab_login_2" data-toggle="tab" aria-expanded="false">Đăng ký</a></li>
+                                    </ul>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="tab-content">
+                                            <div id="tab_login_1" class="tab-pane active">
+                                                <div class="login-tab-wrapper">
+                                                    <div class="login-heading">
+                                                        <div class="text-heading"><!-- ngIf: !enableSkip --><span ng-if="!enableSkip" class="sub-text ng-scope">Vui lòng đăng nhập trước khi mua vé để tích luỹ điểm, cơ hội nhận thêm nhiều ưu đãi từ chương trình thành viên Galaxy Cinema.</span><!-- end ngIf: !enableSkip --><!-- ngIf: enableSkip --></div><!-- ngIf: message --></div>
+                                                    <form ng-submit="submit()" class="login-form ng-pristine ng-valid-email ng-invalid ng-invalid-required">
+                                                        <input placeholder="Email" type="email" ng-model="userInfo.email" required="required" class="login ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required">
+                                                        <input placeholder="Mật khẩu" type="password" ng-model="userInfo.password" required="required" class="login ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required">
+                                                        <div class="login-remember"><!--.remember--><!--  .toggle-button.toggle-button-login--><!--    input#toggleRemember(type='checkbox' ng-model='userInfo.remember')--><!--    label(for='toggleRemember') Ghi nhớ--><!--    .toggle-button-icon--><div class="forget-pass"><a id="forgetPass" href="" ng-click="openForgetPass()">Quên mật khẩu?</a></div><!-- ngIf: userNotActive == true --></div>
+                                                        <button class="btn primary input">
+                                                            <i ng-show="isSubmit" class="fa fa-pulse fa-spinner ng-hide"></i>Đăng nhập
+                                                        </button><!-- ngIf: enableSkip --><!-- ngIf: enableSkip --><!--.social-login--><!--  span Hoặc đăng nhập bằng--><!--  a(href='')--><!--    i.icon-facebook--><!--  a(href='')--><!--    i.icon-google-plus-->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div id="tab_login_2" ng-controller="registerController" class="tab-pane ng-scope">
+                                                <div class="login-tab-wrapper"><!-- ngIf: message -->
+                                                    <div class="login-form">
+                                                        <form ng-submit="submit()" class="ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-email">
+                                                            <input placeholder="Họ tên" type="text" ng-model="user.fullName" required="required" class="login first ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required">
+                                                            <div class="row city">
+                                                                <div class="col-md-6 col-sm-6 col-xs-6 first-col">
+                                                                    <input type="text" placeholder="Số điện thoại" maxlength="14" ng-model="user.mobilePhone" required="required" class="login register-input ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength"></div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-6 second-col mt-14">
+                                                                    <galaxy-select ng-model="genderSelect" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty">
+                                                                        <a class="btn btn-select login location">
+                                                                            <span class="btn-select-value ng-binding">Chọn giới tính</span>
+                                                                            <span class="btn-select-arrow"></span>
+                                                                            <select ng-change="onChange()" ng-model="curentIndex" class="ng-pristine ng-untouched ng-valid ng-not-empty"><option value="? number:-1 ?" selected="selected"></option>
+                                                                                <option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="0" class="ng-binding ng-scope" value="number:0">
+       Nam
+                                                                                </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="1" class="ng-binding ng-scope" value="number:1">
+                                                                                Nữ
+                                                                                </option><!-- end ngRepeat: item in items -->
+                                                                            </select>
+                                                                        </a>
+                                                                    </galaxy-select>
+                                                                </div>
+                                                            </div>
+                                                            <input type="email" placeholder="Email" ng-model="user.email" required="required" class="login register-input remove-mb ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required">
+                                                            <div class="row city">
+                                                                <div class="col-md-6 col-sm-6 col-xs-6 first-col"><input type="password" placeholder="Mật khẩu" ng-model="user.password" required="required" class="login ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"></div><div class="col-md-6 col-sm-6 col-xs-6 second-col"><input type="password" placeholder="Xác nhận mật khẩu" ng-model="user.confirmPassword" required="required" class="login ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row birthday-signup">
+                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <galaxy-datepicker ng-model="user.dateOfBirth" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty">
+                                                                        <a class="btn btn-select login location datepicker">
+                                                                            <input type="text" name="" class="btn-select-input date" placeholder="Chọn ngày (dd/mm/yyyy)">
+                                                                            <span class="select-calendar">
+                                                                                <i class="icon-calendar"></i>
+                                                                            </span>
+                                                                        </a>
+                                                                    </galaxy-datepicker>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                            <p class="text-confirm-signup">Tôi đã đọc và đồng ý với&nbsp;<a ng-click="openPolicy()" data-toggle="modal" data-target="#popupPolicies"><b>CHÍNH SÁCH&nbsp;</b></a>của chương trình.&nbsp;
+                                                            </p>
+                                                            <br>
+                                                            <button class="btn primary input"><i ng-show="isSubmit" class="fa fa-pulse fa-spinner ng-hide"></i>Đăng ký
+                                                            </button>
+                                                        </form></div></div></div></div></div></div></div></div></div></div></div></div><!-- end ngIf: openLogin --></div>
+        <div ng-controller="forgetPassController" class="ng-scope">
+            <div id="forgetpass-modal" style="z-index: 1111; display: none;" class="modal fade">
+                <div class="modal-dialog"><div class="modal-outer-container">
+                    <div class="modal-middle-container"><div class="login-wrapper animated slideInDown">
+                        <div class="login-container"><span ng-click="closeModelForget()" class="close">
+                            <i class="icon-cancel"></i></span><div class="tab-login-line">
+                                <div class="tab-login-title">Quên mật khẩu</div>
+                                <div class="login-tab-wrapper">
+                                    <div class="login-heading"><div class="text-heading">
+                                        <span class="sub-text">Vui lòng cung cấp email đăng nhập, chúng tôi sẽ gửi link kích hoạt cho bạn.</span>
+                                    </div>
+                                </div><!-- ngIf: message -->
+                                    <form ng-submit="submit()" class="login-form ng-pristine ng-valid-email ng-invalid ng-invalid-required">
+                                        <input placeholder="Email" type="email" ng-model="item.email" required="required" class="login ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required">
+                                        <button class="btn primary input">
+                                        <i ng-show="isSubmit" class="fa fa-pulse fa-spinner ng-hide"></i>Cấp lại mật khẩu
+                                    </button>
+                                    </form>
+                                </div>
+                            </div></div></div></div></div></div></div></div><!--#success-modal(style='display: none;')-->
+        <div ng-controller="registerController" class="ng-scope">
+            <div id="success-modal" style="z-index:1111;" class="modal fade">
+                <div class="modal-dialog"><div class="modal-outer-container">
+                    <div class="modal-middle-container">
+                        <div class="login-wrapper animated slideInDown">
+                            <div class="login-container">
+                                <span ng-click="closeModelSuccess()" class="close">
+                                    <i class="icon-cancel"></i></span>
+                                    <div class="tab-login-line">
+                                        <div class="tab-login-title">Đăng ký thành công</div>
+                                        <div class="login-tab-wrapper"><div class="login-heading success">
+                                            <i class="icon-success"></i><div class="text-heading">
+                                                <span class="sub-text">Bạn vui lòng truy cập email để kích hoạt tài khoản.
+
+                                                </span>
+                                            </div></div></div></div></div></div></div></div></div></div></div><!--include active--></div>
+</div> 
+</body>
+</html>
