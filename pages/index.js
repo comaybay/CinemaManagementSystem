@@ -1,26 +1,358 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react'
 import supabase from '../utils/supabase'
+import useUserProfile from '../utils/useUserProfile';
 
 export default function Home() {
   const [userEmail, setUserEmail] = useState("loading...");
-
-  useEffect(() => {
-    setUserEmail(supabase.auth.user()?.email);
-  }, []);
-
+  const {isProfileLoading, profile} = useUserProfile();
+  const router = useRouter();
+  const signOut = async() => {
+    await supabase.auth.signOut();
+    await router.reload();
+  }
+ 
   return (
     <>
-      <div className="flex justify-center">
-        <h1 className="text-3xl font-bold">
-          Hello {userEmail ?? "anon"}!
-        </h1>
-      </div>
-      <div className='bg-green-300 w-full flex space-x-3 justify-center'>
-        <Link href="/sign-in">Login</Link>
-        <Link href="/sign-up">Sign Up</Link>
+      <div id="main">
+        <div className="header flex justify-between mx-32">
+          <img id="logoHeader" src="./img/galaxyS-logo.png" alt="logo" />
+         
+          {!profile ?
+            !isProfileLoading &&
+              <Link href="/sign-in" >
+                <ul className="flex space-x-2">
+                  <li > <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                  </svg></li>
+                  <li><a href="#" className="text-3xl" >
+                    Đăng nhập
+                    </a></li>
+                </ul>
+              </Link>
+              :
+            <ul className="flex space-x-2">
+              <li > <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg></li>
+              <li><p href="#" className="text-3xl" >
+                {profile.name}
+              </p></li>
+              <button className="ml-4 text-3xl hover:text-blue-700" onClick={signOut}>đăng xuất</button>
+            </ul>
+          }
+        </div>
+        <div className="sideBar">
+          <ul id="nav">
+            <li><a href="#">MUA VÉ</a></li>
+            <li><a href="#">PHIM</a></li>
+            <li><a href="#">THÀNH VIÊN</a></li>
+            <li><a href="#">HỖ TRỢ</a></li>
+          </ul>
+        </div>
+        <div className="banner">
+          <div className="bannerImg">
+            <img src="./img/2048x682_1648780788430.jpg" />
+          </div>
+          <div className="bannerForm">
+            <div id="bannerTitleForm">mua vé nhanh</div>
+            <form action="">
+              <select name="chonPhim" id="chonPhim">\
+                <option value="">Chọn phim</option>
+                <option value="">Phim 1</option>
+                <option value="">Phim 2</option>
+                <option value="">Phim 3</option>
+                <option value="">Phim 4</option>
+                <option value="">Phim 5</option>
+              </select>
+              <select name="chonRap" id="chonRap">
+                <option value="">Chọn rạp</option>
+                <option value="">Rạp 1</option>
+                <option value="">Rạp 2</option>
+                <option value="">Rạp 3</option>
+                <option value="">Rạp 4</option>
+                <option value="">Rạp 5</option>
+              </select>
+              <select name="chonNgay" id="chonNgay">
+                <option value="">Chọn ngày</option>
+                <option value="">Ngày 1</option>
+                <option value="">Ngày 2</option>
+                <option value="">Ngày 3</option>
+                <option value="">Ngày 4</option>
+                <option value="">Ngày 5</option>
+              </select>
+              <select name="chonSuat" id="chonSuat">
+                <option value="">Chọn suất</option>
+                <option value="">Suất 1</option>
+                <option value="">Suất 2</option>
+                <option value="">Suất 3</option>
+                <option value="">Suất 4</option>
+                <option value="">Suất 5</option>
+              </select>
+              <button id="chonSubmit" type="submit">Mua vé</button>
+            </form>
+          </div>
+        </div>
+        <div className="content">
+          <div className="tabMovie-line">
+            <ul className="navMovie">
+              <li className="active"><a href="#" className='hover:text-blue-500'>
+                phim đang chiếu
+              </a></li>
+              <li className="#">
+                <a href="#" className="hover:text-blue-500">
+                  phim sắp chiếu
+                </a>
+              </li>
+            </ul>
+            <div className="tabContent">
+              <div id="tabDefault1" className="tab-pane active">
+                <div className="movieBox">
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem1.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Moribus</h4>
+                      <h4 className="vn upper-text"></h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem2.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">The lost city</h4>
+                      <h4 className="vn upper-text">Thành phố mất tích</h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem3.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">The bad guys</h4>
+                      <h4 className="vn upper-text">Những kẻ xấu xa</h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem4.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Đêm tối rực rỡ</h4>
+                      <h4 className="vn upper-text"></h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem5.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Mến gái miền tây</h4>
+                      <h4 className="vn upper-text"></h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem6.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Cracked</h4>
+                      <h4 className="vn upper-text">Vết nứt - Ám ảnh linh hồn</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="tabDefault2" className="tab-pane active">
+                <div className="movieBox">
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem1b.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Doctor Strange In The Multiverse Of Madness</h4>
+                      <h4 className="vn upper-text">Phù Thủy Tối Thượng Trong Đa Vũ Trụ Hỗn Loạn</h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem2b.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">578: Phát Đạn Của Kẻ Điên</h4>
+                      <h4 className="vn upper-text"></h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem3b.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Jurassic World Dominion</h4>
+                      <h4 className="vn upper-text">Thế Giới Khủng Long: Lãnh Địa</h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem4b.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Minions: The Rise of Gru</h4>
+                      <h4 className="vn upper-text">Minions: Sự Trỗi Dậy Của Gru</h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem5b.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Thor: Love And Thunder</h4>
+                      <h4 className="vn upper-text">Thor: Tình Yêu Và Sấm Sét</h4>
+                    </div>
+                  </div>
+                  <div className="movieItem">
+                    <div className="movieImg">
+                      <img src="./img/movieItem6b.jpg" alt=""/>
+                    </div>
+                    <div className="movie-Title">
+                      <h4 className="upper-text">Thanh Sói - Cúc Dại Trong Đêm</h4>
+                      <h4 className="vn upper-text"></h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row-reverse mb-10">
+              <button class="btn hover:bg-blue-700 hover:text-white">
+                xem thêm
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="footer">
+          <div className="footer-bg">
+            <div className="footer-item">
+              <ul className="list-item">
+                <li>
+                  <h1 className="Title-footer">Giới thiệu</h1>
+                </li>
+                <li className="Content-Footer">
+                  <ul className="Content-Footer-list">
+                    <li><a href="#">
+                      Về chúng tôi
+                    </a></li>
+                    <li><a href="#">
+                      Liên hệ
+                    </a></li>
+                    <li><a href="#">
+                      Điều khoản
+                    </a></li>
+                    <li><a href="#">
+                      Chính sách bảo mật
+                    </a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div className="footer-item">
+              <ul className="list-item">
+                <li>
+                  <h1 className="Title-footer">Góc điện ảnh</h1>
+                </li>
+                <li className="Content-Footer">
+                  <ul className="Content-Footer-list">
+                    <li><a href="#">
+                      Thể loại phim
+                    </a></li>
+                    <li><a href="#">
+                      Bình luận phim
+                    </a></li>
+                    <li><a href="#">
+                      Blog điện ảnh
+                    </a></li>
+                    <li><a href="#">
+                      Phim hay tháng
+                    </a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div className="footer-item">
+              <ul className="list-item">
+                <li>
+                  <h1 className="Title-footer">Hỗ trợ</h1>
+                </li>
+                <li className="Content-Footer">
+                  <ul className="Content-Footer-list">
+                    <li><a href="#">
+                      Góp ý
+                    </a></li>
+                    <li><a href="#">
+                      Service
+                    </a></li>
+                    <li><a href="#">
+                      Rạp/ Giá vé
+                    </a></li>
+                    <li><a href="#">
+                      Tuyển dụng
+                    </a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div className="footer-item">
+              <ul className="list-item">
+                <li>
+                  <h1 className="Title-footer">Kết nối với chúng tôi</h1>
+                  <div className="flex">
+                      <a href="#" className="IconInFooter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-facebook" viewBox="0 0 16 16">
+                          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                        </svg>
+                      </a>
+                      <a href="#" className="IconInFooter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-youtube" viewBox="0 0 16 16">
+                          <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
+                        </svg>
+                      </a>
+                      <a href="#" className="IconInFooter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-instagram" viewBox="0 0 16 16">
+                          <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
+                        </svg>
+                      </a>
+                  </div>
+                </li>
+                <div>
+                  <ul className="list-item">
+                    <li>
+                      <h1 className="Title-footer">Download app</h1>
+                      <div className="flex">
+                          <a href="#" className="IconInFooter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-apple" viewBox="0 0 16 16">
+                              <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282z" />
+                              <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282z" />
+                            </svg>
+                          </a>
+                          <a href="#" className="IconInFooter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-file-play-fill" viewBox="0 0 16 16">
+                              <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM6 5.883a.5.5 0 0 1 .757-.429l3.528 2.117a.5.5 0 0 1 0 .858l-3.528 2.117a.5.5 0 0 1-.757-.43V5.884z" />
+                            </svg>
+                          </a>
+                      </div>
+                    </li>
+                    </ul>
+                </div>
+              </ul>
+            </div>
+          </div>
+          <div className="footer-bottom">
+
+          </div>
+        </div>
       </div>
     </>
   )
