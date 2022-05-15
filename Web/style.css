@@ -180,7 +180,7 @@ ul li{
     display: inline-block;
     margin-right: 30px;
 }
-.navMovie li >a{
+.navMovie li > button{
     border: none;
     color: #a0a3a7;
     text-transform: uppercase;
@@ -248,9 +248,6 @@ ul li{
 
 
 /* CSS thanvien.html */
-.navMovie .dangki{
-
-}
 .navMovie .thongtin{
     display:none;
 }

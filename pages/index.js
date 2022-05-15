@@ -2,19 +2,26 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import supabase from '../utils/supabase'
 import useUserProfile from '../utils/useUserProfile';
+import NowAiring from './components/NowAiring';
+import ComingSoon from './components/ComingSoon';
 
 export default function Home() {
   const [userEmail, setUserEmail] = useState("loading...");
   const {isProfileLoading, profile} = useUserProfile();
+
   const router = useRouter();
   const signOut = async() => {
     await supabase.auth.signOut();
-    await router.reload();
+    router.reload();
   }
- 
+
+  const nowAiring = useMemo(() => <NowAiring />, []) 
+  const comingSoon = useMemo(() => <ComingSoon />, [])
+  const [schedule, setSchedule] = useState(nowAiring);
+
   return (
     <>
       <div id="main">
@@ -99,137 +106,19 @@ export default function Home() {
         <div className="content">
           <div className="tabMovie-line">
             <ul className="navMovie">
-              <li className="active"><a href="#" className='hover:text-blue-500'>
-                phim đang chiếu
-              </a></li>
-              <li className="#">
-                <a href="#" className="hover:text-blue-500">
-                  phim sắp chiếu
-                </a>
+              <li className="active">
+                <button onClick={() => setSchedule(nowAiring)} className='hover:text-blue-500'>
+                  Phim đang chiếu
+                </button>
+              </li>
+              <li >
+                <button onClick={() => setSchedule(comingSoon)} className="hover:text-blue-500">
+                  Phim sắp chiếu
+                </button>
               </li>
             </ul>
             <div className="tabContent">
-              <div id="tabDefault1" className="tab-pane active">
-                <div className="movieBox">
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem1.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Moribus</h4>
-                      <h4 className="vn upper-text"></h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem2.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">The lost city</h4>
-                      <h4 className="vn upper-text">Thành phố mất tích</h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem3.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">The bad guys</h4>
-                      <h4 className="vn upper-text">Những kẻ xấu xa</h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem4.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Đêm tối rực rỡ</h4>
-                      <h4 className="vn upper-text"></h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem5.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Mến gái miền tây</h4>
-                      <h4 className="vn upper-text"></h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem6.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Cracked</h4>
-                      <h4 className="vn upper-text">Vết nứt - Ám ảnh linh hồn</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div id="tabDefault2" className="tab-pane active">
-                <div className="movieBox">
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem1b.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Doctor Strange In The Multiverse Of Madness</h4>
-                      <h4 className="vn upper-text">Phù Thủy Tối Thượng Trong Đa Vũ Trụ Hỗn Loạn</h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem2b.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">578: Phát Đạn Của Kẻ Điên</h4>
-                      <h4 className="vn upper-text"></h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem3b.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Jurassic World Dominion</h4>
-                      <h4 className="vn upper-text">Thế Giới Khủng Long: Lãnh Địa</h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem4b.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Minions: The Rise of Gru</h4>
-                      <h4 className="vn upper-text">Minions: Sự Trỗi Dậy Của Gru</h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem5b.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Thor: Love And Thunder</h4>
-                      <h4 className="vn upper-text">Thor: Tình Yêu Và Sấm Sét</h4>
-                    </div>
-                  </div>
-                  <div className="movieItem">
-                    <div className="movieImg">
-                      <img src="./img/movieItem6b.jpg" alt=""/>
-                    </div>
-                    <div className="movie-Title">
-                      <h4 className="upper-text">Thanh Sói - Cúc Dại Trong Đêm</h4>
-                      <h4 className="vn upper-text"></h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row-reverse mb-10">
-              <button class="btn hover:bg-blue-700 hover:text-white">
-                xem thêm
-              </button>
+              {schedule}
             </div>
           </div>
         </div>

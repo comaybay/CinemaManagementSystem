@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react"
 import supabase from "../utils/supabase.js"
 
-export default function Home() {
+export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

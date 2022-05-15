@@ -13,8 +13,10 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  text-decoration-line: none !important;
 }
 
 * {
   box-sizing: border-box;
+  outline-width: 0 !important;
 }
