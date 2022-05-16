@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from 'next/router';
 import useUserProfile from "../../utils/useUserProfile";
+import Link from "next/link";
 
 export default function Header() {
   const [userEmail, setUserEmail] = useState("loading...");
@@ -42,10 +43,10 @@ export default function Header() {
       </div>
       <div className="sideBar">
         <ul id="nav">
-          <li><a href="#">MUA VÉ</a></li>
-          <li><a href="#">PHIM</a></li>
-          <li><a href="#">THÀNH VIÊN</a></li>
-          <li><a href="#">HỖ TRỢ</a></li>
+          <li><Link href="/buy">MUA VÉ</Link></li>
+          <li><Link href="/">PHIM</Link></li>
+          <li><Link href="/membership">THÀNH VIÊN</Link></li>
+          <li><Link href="/support">HỖ TRỢ</Link></li>
         </ul>
       </div>
     </>
