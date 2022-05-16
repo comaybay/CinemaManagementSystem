@@ -36,9 +36,6 @@ export default function ComingSoon() {
 
   const [selectedSchedule, setSelectedSchedule] = useState(null);
 
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
   useEffect(() => {
     if (isComingSoonScheduleLoading)
       return;
@@ -56,7 +53,7 @@ export default function ComingSoon() {
               className={`${comingSoonSchedule === selectedSchedule ? "border-2 border-white bg-blue-600 text-white" : "border-2 border-blue-600 text-blue-600 hover:bg-blue-200"}
                  py-3 px-6 rounded-lg`}
               onClick={() => setSelectedSchedule(comingSoonSchedule)}>
-              {"Từ ngày " + tomorrow.getDate()}
+              Sắp chiếu
             </button>
 
             {schedules.map((s, i) => (
