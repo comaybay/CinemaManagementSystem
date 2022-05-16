@@ -41,7 +41,7 @@ export default function Header() {
           </ul>
         }
       </div>
-      <div className="sideBar">
+      <div className="sideBar bg-blue-900">
         <ul id="nav">
           <li><Link href="/buy">MUA VÉ</Link></li>
           <li><Link href="/">PHIM</Link></li>
