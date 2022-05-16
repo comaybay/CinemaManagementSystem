@@ -37,12 +37,7 @@ export default function NowAiring() {
           schedules!inner (date)
         `)
         .eq("schedules.date", today);
-      }, 
-      result => {
-        console.log("WWHAT");
-        return result.data;
-      }
-      );
+      });
   } 
 
   return (
