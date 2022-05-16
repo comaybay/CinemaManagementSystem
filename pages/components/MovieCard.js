@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function MovieCard({movie}) {
   return (
-    <Link href={`phim/${movie.id}`} >
+    <Link href={`movie/${movie.id}`} >
       <div className="movieItem cursor-pointer">
         <div className="movieImg object-">
           <img src={movie.img_url} alt={movie.name} />
