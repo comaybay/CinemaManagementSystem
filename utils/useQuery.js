@@ -18,7 +18,6 @@ export default (defaultQuery, resultHandler = result => result.data) => {
       if (!query) {
         return;
       }
-      console.log(query)
 
       setIsLoading(true);
       const result = await query(supabase);
