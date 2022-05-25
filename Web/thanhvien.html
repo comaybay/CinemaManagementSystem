@@ -7,6 +7,8 @@
     <link rel="icon" type="image/svg+xml" href="./img/logotitle.svg " />
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="/website/css/animate.min.css?version=20201127001"> -->
     <title>CinemaS</title>
 </head>
 <body>
@@ -58,23 +60,238 @@
             </ul>
         </div>
         <div class="tabContent">
-            <div>
-                <p style="margin-top:12.0pt; text-align:justify; margin:0in 0in 8pt 0.5in"><span style="font-family:Arial,Helvetica,sans-serif;"><strong>&nbsp;Quyền lợi chính: </strong></span></p>
-                <img src="img/quyenloi.png" alt="" height="270" width="600">
+            <div class="quyenloi">
+                <div>
+                    <p style="margin-top:12.0pt; text-align:justify; margin:0in 0in 8pt 0.5in"><span style="font-family:Arial,Helvetica,sans-serif;"><strong>&nbsp;Quyền lợi chính: </strong></span></p>
+                    <img src="img/quyenloi.png" alt="" height="270" width="600">
+                </div>
+                <div>
+                    <p>&nbsp;</p>
+                    <p><span style="font-family:Arial,Helvetica,sans-serif;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Chú ý: </strong></span></p>
+                    <ul>
+                        <li class="m_9009503279824267764MsoListParagraph" style="margin-left: 72pt;"><span style="font-family:Arial,Helvetica,sans-serif;">Quà tri ân sẽ được trao vào cuối năm cho thành viên V.I.P</span></li>
+                    </ul>
+                    <p><span style="font-family:Arial,Helvetica,sans-serif;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quyền lợi khác:</strong> </span></p>
+                    <ul>
+                        <li style="margin:0in 0in 0.0001pt 0.5in"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="line-height:107%">Tham dự buổi công chiếu ra mắt cùng các sao: cơ hội cùng các ngôi sao nổi tiếng tham dự buổi ra mắt phim.</span></span></li>
+                        <li style="margin:0in 0in 0.0001pt 0.5in"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="line-height:107%">Nhận quà tặng độc đáo vào các ngày lễ lớn như Valentine, 8/3…</span></span></li>
+                        <li style="margin:0in 0in 8pt 0.5in"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="line-height:107%">Cơ hội nhân đôi/nhân ba điểm tích lũy nhân các sự kiện đặc biệt</span></span></li>
+                    </ul>
+                    <p>&nbsp;</p>
+                </div>
             </div>
-            <div>
-                <p>&nbsp;</p>
-                <p><span style="font-family:Arial,Helvetica,sans-serif;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Chú ý: </strong></span></p>
-                <ul>
-                    <li class="m_9009503279824267764MsoListParagraph" style="margin-left: 72pt;"><span style="font-family:Arial,Helvetica,sans-serif;">Quà tri ân sẽ được trao vào cuối năm cho thành viên V.I.P</span></li>
-                </ul>
-                <p><span style="font-family:Arial,Helvetica,sans-serif;"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quyền lợi khác:</strong> </span></p>
-                <ul>
-                    <li style="margin:0in 0in 0.0001pt 0.5in"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="line-height:107%">Tham dự buổi công chiếu ra mắt cùng các sao: cơ hội cùng các ngôi sao nổi tiếng tham dự buổi ra mắt phim.</span></span></li>
-                    <li style="margin:0in 0in 0.0001pt 0.5in"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="line-height:107%">Nhận quà tặng độc đáo vào các ngày lễ lớn như Valentine, 8/3…</span></span></li>
-                    <li style="margin:0in 0in 8pt 0.5in"><span style="font-family:Arial,Helvetica,sans-serif;"><span style="line-height:107%">Cơ hội nhân đôi/nhân ba điểm tích lũy nhân các sự kiện đặc biệt</span></span></li>
-                </ul>
-                <p>&nbsp;</p>
+            <div class="thong tin">
+                <div id="tab_info" ng-controller="userInfoController" class="tab-pane active ng-scope">
+                    <form ng-submit="submit()" class="member-form ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="col-md-5 col-sm-7 col-xs-7">
+                                <label>Họ &amp; Tên</label>
+                                <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-email ng-binding" data-original-title="Bạn không thể tự đổi họ tên. Vui lòng liên hệ supports@galaxy.com.vn">VO NHAT THANH</button>
+                            </div>
+                           
+                        </div>
+                        <div class="row row-info">
+                            <div class="col-md-3 col-sm-8 col-xs-8">
+                                <label>Ngày sinh</label>
+                                <button type="button" class="btn btn-email ng-binding">01/01/0001</button><!--input#birthday.login(placeholder='11/05/1990', type='text' ng-model='user.dateOfBirth')-->
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
+                                <label>Giới tính</label>
+                                <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-email ng-binding" data-original-title="Bạn không thể tự đổi giới tính. Vui lòng liên hệ supports@galaxy.com.vn">Nam</button>
+                            </div>
+                            <div class="col-md-3 col-sm-12 col-xs-12">
+                                <label>Số điện thoại</label>
+                                <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-email ng-binding" data-original-title="Bạn không thể tự đổi số điện thoại. Vui lòng liên hệ supports@galaxy.com.vn">0946312350</button>
+                            </div>
+                        </div>
+                        <div class="row row-info">
+                            <div class="col-md-5">
+                                <label>Địa chỉ</label>
+                                <input id="address" placeholder="1 Le Duan" type="text" ng-model="user.address" class="login ng-pristine ng-untouched ng-valid ng-empty">
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <label>Tỉnh/Thành Phố</label>
+                                <galaxy-select ng-model="citySelect" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty">
+                                    <a class="btn btn-select login location">
+                                        <span class="btn-select-value ng-binding">Cà Mau</span>
+                                        <span class="btn-select-arrow"></span>
+                                        <select ng-change="onChange()" ng-model="curentIndex" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+                                            <!-- ngIf: !model.disablePlaceholder -->
+                                            <!-- ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="0" class="ng-binding ng-scope" value="number:0">
+                                            TP Hồ Chí Minh
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="1" class="ng-binding ng-scope" value="number:1">
+                                            Hà Nội
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="2" class="ng-binding ng-scope" value="number:2">
+                                            Đà Nẵng
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="3" class="ng-binding ng-scope" value="number:3">
+                                            An Giang
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="4" class="ng-binding ng-scope" value="number:4">
+                                            Bà Rịa - Vũng Tàu
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="5" class="ng-binding ng-scope" value="number:5">
+                                            Bắc Giang
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="6" class="ng-binding ng-scope" value="number:6">
+                                            Bắc Kạn
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="7" class="ng-binding ng-scope" value="number:7">
+                                            Bạc Liêu
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="8" class="ng-binding ng-scope" value="number:8">
+                                            Bắc Ninh
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="9" class="ng-binding ng-scope" value="number:9">
+                                            Bến Tre
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="10" class="ng-binding ng-scope" value="number:10">
+                                            Bình Dương
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="11" class="ng-binding ng-scope" value="number:11">
+                                            Bình Định
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="12" class="ng-binding ng-scope" value="number:12">
+                                            Bình Phước
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="13" class="ng-binding ng-scope" value="number:13">
+                                            Bình Thuận
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="14" class="ng-binding ng-scope" value="number:14" selected="selected">
+                                            Cà Mau
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="15" class="ng-binding ng-scope" value="number:15">
+                                            Cần Thơ
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="16" class="ng-binding ng-scope" value="number:16">
+                                            Cao Bằng
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="17" class="ng-binding ng-scope" value="number:17">
+                                            Đắk Lắk
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="18" class="ng-binding ng-scope" value="number:18">
+                                            Đắk Nông
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="19" class="ng-binding ng-scope" value="number:19">
+                                            Điện Biên
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="20" class="ng-binding ng-scope" value="number:20">
+                                            Đồng Nai
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="21" class="ng-binding ng-scope" value="number:21">
+                                            Đồng Tháp
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="22" class="ng-binding ng-scope" value="number:22">
+                                            Gia Lai
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="23" class="ng-binding ng-scope" value="number:23">
+                                            Hà Giang
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="24" class="ng-binding ng-scope" value="number:24">
+                                            Hà Nam
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="25" class="ng-binding ng-scope" value="number:25">
+                                            Hà Tĩnh
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="26" class="ng-binding ng-scope" value="number:26">
+                                            Hải Dương
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="27" class="ng-binding ng-scope" value="number:27">
+                                            Hải Phòng
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="28" class="ng-binding ng-scope" value="number:28">
+                                            Hậu Giang
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="29" class="ng-binding ng-scope" value="number:29">
+                                            Hòa Bình
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="30" class="ng-binding ng-scope" value="number:30">
+                                            Hưng Yên
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="31" class="ng-binding ng-scope" value="number:31">
+                                            Khánh Hòa
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="32" class="ng-binding ng-scope" value="number:32">
+                                            Kiên Giang
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="33" class="ng-binding ng-scope" value="number:33">
+                                            Kon Tum
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="34" class="ng-binding ng-scope" value="number:34">
+                                            Lai Châu
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="35" class="ng-binding ng-scope" value="number:35">
+                                            Lâm Đồng
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="36" class="ng-binding ng-scope" value="number:36">
+                                            Lạng Sơn
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="37" class="ng-binding ng-scope" value="number:37">
+                                            Lào Cai
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="38" class="ng-binding ng-scope" value="number:38">
+                                            Long An
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="39" class="ng-binding ng-scope" value="number:39">
+                                            Nam Định
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="40" class="ng-binding ng-scope" value="number:40">
+                                            Nghệ An
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="41" class="ng-binding ng-scope" value="number:41">
+                                            Ninh Bình
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="42" class="ng-binding ng-scope" value="number:42">
+                                            Ninh Thuận
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="43" class="ng-binding ng-scope" value="number:43">
+                                            Phú Thọ
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="44" class="ng-binding ng-scope" value="number:44">
+                                            Phú Yên
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="45" class="ng-binding ng-scope" value="number:45">
+                                            Quảng Bình
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="46" class="ng-binding ng-scope" value="number:46">
+                                            Quảng Nam
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="47" class="ng-binding ng-scope" value="number:47">
+                                            Quảng Ngãi
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="48" class="ng-binding ng-scope" value="number:48">
+                                            Quảng Ninh
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="49" class="ng-binding ng-scope" value="number:49">
+                                            Quảng Trị
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="50" class="ng-binding ng-scope" value="number:50">
+                                            Sóc Trăng
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="51" class="ng-binding ng-scope" value="number:51">
+                                            Sơn La
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="52" class="ng-binding ng-scope" value="number:52">
+                                            Tây Ninh
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="53" class="ng-binding ng-scope" value="number:53">
+                                            Thái Bình
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="54" class="ng-binding ng-scope" value="number:54">
+                                            Thái Nguyên
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="55" class="ng-binding ng-scope" value="number:55">
+                                            Thanh Hóa
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="56" class="ng-binding ng-scope" value="number:56">
+                                            Thừa Thiên Huế
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="57" class="ng-binding ng-scope" value="number:57">
+                                            Tiền Giang
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="58" class="ng-binding ng-scope" value="number:58">
+                                            Trà Vinh
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="59" class="ng-binding ng-scope" value="number:59">
+                                            Tuyên Quang
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="60" class="ng-binding ng-scope" value="number:60">
+                                            Vĩnh Long
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="61" class="ng-binding ng-scope" value="number:61">
+                                            Vĩnh Phúc
+                                            </option><!-- end ngRepeat: item in items --><option ng-repeat="item in items" ng-selected="item[model.keyValue] == model.currentValue" ng-value="62" class="ng-binding ng-scope" value="number:62">
+                                            Yên Bái
+                                            </option><!-- end ngRepeat: item in items -->
+                                        </select>
+                                    </a>
+                                </galaxy-select>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <label>Quận/Huyện</label>
+                                <galaxy-select ng-model="districtSelect" class="ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty">
+                                    <a class="btn btn-select login location">
+
+                                        <span class="btn-select-value ng-binding">TP Cà Mau</span>
+                                        <span class="btn-select-arrow"></span>
+                                        <select ng-change="onChange()" ng-model="curentIndex" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+                                        </select>
+                                </a></galaxy-select>
+                            </div>
+                        </div>
+                        <div class="row row-info">
+                            <div class="col-md-5">
+                                <label>Email</label>
+                                <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-email ng-binding" data-original-title="Bạn không thể tự đổi email. Vui lòng liên hệ supports@galaxy.com.vn">THANHNHATCM@GMAIL.COM</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="toggle-button toggle-button-login toggle-member">
+                                    <input id="changepass" type="checkbox" ng-model="user.changePassword" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                    <label for="changepass">Đổi mật khẩu</label>
+                                    <div class="toggle-button-icon">
+                                    </div>
+                                </div>
+                                <div id="box-changepass">
+                                    <input placeholder="Mật khẩu hiện tại" type="password" ng-model="user.oldPassword" class="login pass ng-pristine ng-untouched ng-valid ng-empty">
+                                    <input placeholder="Mật khẩu mới" type="password" ng-model="user.newPassword" class="login pass ng-pristine ng-untouched ng-valid ng-empty">
+                                    <input placeholder="Xác nhận mật khẩu" type="password" ng-model="user.confirmNewPassword" class="login pass ng-pristine ng-untouched ng-valid ng-empty">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-info">
+                            <div class="col-md-12">
+                                <button id="save" class="btn primary btn-login-buyticket">
+                                    <i ng-show="isSubmit" class="fa fa-pulse fa-spinner ng-hide">
+
+                                    </i>Lưu lại
+                                </button>
+                                </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
