@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import useQuery from '../../../utils/useQuery';
+import Button from '../../components/Button';
 
 export default function SelectTickets({ maxSingleSeat, maxDoubleSeat, onDone }) {
   const [singleSeatNum, setSingleSeatNum] = useState(0);
@@ -12,7 +13,7 @@ export default function SelectTickets({ maxSingleSeat, maxDoubleSeat, onDone }) 
   const totalPrice = singleSeat?.price * singleSeatNum + doubleSeat?.price * doubleSeatNum;
 
   const createRow = (name, num, maxTicketNum, price, setFunc) => (
-    <tr className="bg-slate-100">
+    <tr key={name} className="bg-slate-100">
       <td className="py-2 text-slate-700 text-3xl text-center border border-white">{name}</td>
       <td className="py-2 text-slate-700 text-3xl border border-white">
         <div className="flex space-x-8 justify-center">
@@ -54,11 +55,11 @@ export default function SelectTickets({ maxSingleSeat, maxDoubleSeat, onDone }) 
 
         <div className="mt-8 flex justify-between space-x-8 items-center">
             <p className="text-4xl text-blue-700">Tổng tiền: {totalPrice} vnđ</p>
-          <button className="px-20 py-2 text-4xl rounded-md text-white bg-blue-700 hover:bg-blue-800" onClick={() => onDone({
+          <Button onClick={() => onDone({
             singleSeatNum,
             doubleSeatNum,
             totalPrice,
-          })}>Tiếp tục</button>
+          })}>Tiếp tục</Button>
         </div>                  
       </div>
       )}

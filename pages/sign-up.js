@@ -63,7 +63,7 @@ export default function SignUp() {
 
   return (
     <div id="main" className="">
-      <div className="login-wrapper mt-10">
+      <div className="login-wrapper my-10">
         <div className="login-container  w-[500px] mx-auto">
           <span ng-click="closeModel()" className="close">
             <i className="icon-cancel"></i>

@@ -60,12 +60,12 @@ export default function Home() {
           <div className="tabMovie-line">
             <ul className="navMovie">
               <li className="active">
-                <button onClick={() => setSchedule(nowAiring)} className='hover:text-blue-500'>
+                <button onClick={() => setSchedule(nowAiring)} className={`hover:text-blue-500 ${schedule === nowAiring ? "text-blue-500" : ""}`}>
                   Phim đang chiếu
                 </button>
               </li>
               <li >
-                <button onClick={() => setSchedule(comingSoon)} className="hover:text-blue-500">
+                <button onClick={() => setSchedule(comingSoon)} className={`hover:text-blue-500 ${schedule === comingSoon ? "text-blue-500" : ""}`}>
                   Phim sắp chiếu
                 </button>
               </li>

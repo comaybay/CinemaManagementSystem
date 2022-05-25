@@ -50,6 +50,11 @@ export default function Header() {
           <li><Link href="/">PHIM</Link></li>
           <li><Link href="/membership">THÀNH VIÊN</Link></li>
           <li><Link href="/support">HỖ TRỢ</Link></li>
+          {
+            profile && profile.is_admin && (
+              <li><Link href="/admin">ADMIN</Link></li>
+            )
+          }
         </ul>
       </div>
     </>
