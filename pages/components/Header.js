@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from 'next/router';
 import useUserProfile from "../../utils/useUserProfile";
+import supabase from "../../utils/supabase";
 import Link from "next/link";
 
 export default function Header() {

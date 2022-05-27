@@ -192,9 +192,6 @@ ul li{
     border: 0;
     padding: 15px 0;
 }
-#tabDefault1{
-
-}
 #tabDefault2{
     display:none;
 }
@@ -384,7 +381,7 @@ input, textarea {
     border-radius: 0;
     -webkit-appearance: none;
 }
-input.login {
+input.login, select.login {
     width: 100%;
     max-width: 100%;
     display: block;
@@ -395,7 +392,7 @@ input.login {
     border: 1px solid #ced0da;
     color: #43464b;
     padding: 10px;
-    margin: 14px 0;
+    margin: 4px 0 14px 0;
 }
 input {
     line-height: normal;
@@ -536,7 +533,6 @@ h1, h2, h3, h4, h5, p {
 }
 [class^="icon-"], [class*=" icon-"] {
     font-family: 'icomoon' !important;
-    speak: none;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
