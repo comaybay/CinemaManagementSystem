@@ -2,51 +2,55 @@ import { useEffect, useState } from "react";
 import useQuery from "../../utils/useQuery";
 import MovieCard from "./MovieCard";
 
-export default function ComingSoon() {
-  const [{ isLoading: isSchedulesLoading, result: schedules }] = useQuery(
-    supabase => {
-      const format = d => d.toISOString().split('T')[0]
-      const today = new Date()
-      const lastDay= new Date(today.getFullYear(), today.getMonth() + 1, 0);
-      return supabase.from('schedules').select(`
-        id,
-        date,
-        movies (id, name, english_name, img_url)
+export default function ComingSoon({cinema}) {
+  const querySchedules = supabase => {
+    const format = d => d.toISOString().split('T')[0]
+    const today = new Date()
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    return supabase.from('schedules').select(`
+        id, date, cinema_id,
+        movies(id, name, english_name, img_url)
       `)
-        .gt("date", format(today))
-        .lte("date", format(lastDay))
-        .order("date")
-    }
-  )
+      .eq("cinema_id", cinema.id)
+      .gt("date", format(today))
+      .lte("date", format(lastDay))
+      .order("date")
+  };
 
-  const [{ isLoading: isComingSoonScheduleLoading, result: comingSoonSchedule }] = useQuery(
-    supabase => {
-      const format = d => d.toISOString().split('T')[0]
-      const today = new Date()
-      return supabase.from('movies').select(`
-        id, name, english_name, img_url,
-        schedules!inner(id, date)
-      `)
-      .gt("schedules.date", format(today))
-    },
-    result =>  {
-        return result.data.length > 0 ? { movies: result.data } : null;
-    }
-  )
 
+  const [{ isLoading: isSchedulesLoading, result: schedules }, setQuerySchedules] = useQuery(querySchedules);
+
+  useEffect(() =>  {
+    setQuerySchedules(querySchedules);
+  }, [cinema]);
+
+  const [comingSoonSchedule, setComingSoonSchedule] = useState({movies: []})
+  
   const [selectedSchedule, setSelectedSchedule] = useState(null);
-
+  
   useEffect(() => {
-    if (isComingSoonScheduleLoading)
-      return;
+    if (!isSchedulesLoading) {
+      const newComingSoonSchedule = {movies: []} 
+      const movieIdSet = new Set();
+      schedules.forEach(s => {
+        s.movies.forEach(m => {
+          if (!movieIdSet.has(m.id)) {
+            newComingSoonSchedule.movies.push(m);
+            movieIdSet.add(m.id);
+          } 
+        })
+      });
+      setComingSoonSchedule(newComingSoonSchedule);
+      setSelectedSchedule(newComingSoonSchedule);
+    }
+  }, [isSchedulesLoading])
 
-    setSelectedSchedule(comingSoonSchedule);
-  }, [isComingSoonScheduleLoading])
+  console.log(selectedSchedule);
 
   return (
     <div className="tab-pane active">
       {isSchedulesLoading && <p className="mx-auto block text-3xl text-blue-700">Đang tải...</p>}
-      {!isSchedulesLoading && (
+      {!isSchedulesLoading  && (
         <>
           <div className="text-3xl flex space-x-4 items-center">
             <button 

@@ -7,10 +7,10 @@ import Schedule from "./Schedule";
 export default function CinemaSection({cinema}) {
   const query = supabase =>
     supabase.from("schedules").select(`
-      id, date,
-      movie_showtimes(id, cinema_id, times,
+      id, date, cinema_id,
+      movie_showtimes(id, times,
         movies(id, name, img_url)))
-      `).eq('movie_showtimes.cinema_id', cinema.id).order("date");
+      `).eq('cinema_id', cinema.id).order("date");
 
   const [{ result: schedules }, setQuery] = useQuery(query);
 
@@ -25,13 +25,20 @@ export default function CinemaSection({cinema}) {
     const shuffle = arr => arr.sort(() => 0.5 - Math.random());
     const randomRange = (min, max) => Math.floor(min + Math.random() * (max - min + 1));  
     
-    const {data, error} = await supabase.from("schedules").insert([{date}]);
-    
-    if (error) {
-      console.error(error);
-      setErrorMsg("Lịch của ngày này đã tồn tại");
-      setGenerating(false);
-      return;
+    const {data, error} = await supabase.from("schedules").insert([{date, cinema_id: cinema.id}]);
+
+    let schedule;
+    if (!error) {
+      schedule = data[0];
+    }
+    //Nếu lịch đã tồn tại, xóa hết phim vào lịch hôm đó của rạp
+    else {
+      console.log(error);
+
+      const res = await supabase.from("schedules").select("id").eq("date", date).eq("cinema_id", cinema.id).single();
+      schedule = res.data;
+      await supabase.from("movie_showtimes").delete().match({schedule_id: schedule.id});
+
     }
     
     const {data: movieIds} = await supabase.from("movies").select("id");
@@ -44,7 +51,7 @@ export default function CinemaSection({cinema}) {
       const start = randomRange(0, times.length - 1);
       const stop = randomRange(start + 1, times.length);
   
-      return { movie_id, cinema_id: cinema.id, schedule_id: data[0].id, times: `{${times.slice(start, stop).join(",")}}` };
+      return { movie_id, schedule_id: schedule.id, times: `{${times.slice(start, stop).join(",")}}` };
     });
 
     const { error: insertError } = await supabase.from("movie_showtimes").insert(rows);

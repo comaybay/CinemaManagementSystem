@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react'
 import NowAiring from './components/NowAiring';
 import ComingSoon from './components/ComingSoon';
+import useQuery from '../utils/useQuery';
 
 export default function Home() {
-  const nowAiring = useMemo(() => <NowAiring />, []) 
-  const comingSoon = useMemo(() => <ComingSoon />, [])
-  const [schedule, setSchedule] = useState(nowAiring);
+  const [{ isLoading, result: cinemas }] = useQuery(supabase => (supabase.from("cinemas").select(`id, name`)));
+  const [cinemaIndex, setCinemaIndex] = useState(0);
+
+  const [airing, setAring] = useState(true);
 
   return (
     <>
@@ -58,21 +60,30 @@ export default function Home() {
         </div>
         <div className="content">
           <div className="tabMovie-line">
-            <ul className="navMovie">
-              <li className="active">
-                <button onClick={() => setSchedule(nowAiring)} className={`hover:text-blue-500 ${schedule === nowAiring ? "text-blue-500" : ""}`}>
-                  Phim đang chiếu
-                </button>
-              </li>
-              <li >
-                <button onClick={() => setSchedule(comingSoon)} className={`hover:text-blue-500 ${schedule === comingSoon ? "text-blue-500" : ""}`}>
-                  Phim sắp chiếu
-                </button>
-              </li>
-            </ul>
-            <div className="tabContent">
-              {schedule}
-            </div>
+            {!isLoading && (
+              <>
+                <ul className="navMovie">
+                <select value={cinemaIndex} onChange={e => setCinemaIndex(e.target.value)} className="login">
+                  {cinemas.map((c, index) => (<option key={index} value={index}>{c.name}</option>))}
+                </select>
+
+                <li className="active"> 
+                  <button onClick={() => setAring(true)} className={`hover:text-blue-500 ${airing ? "text-blue-500" : ""}`}>
+                    Phim đang chiếu
+                  </button>
+                </li>
+                <li >
+                  <button onClick={() => setAring(false)} className={`hover:text-blue-500 ${!airing ? "text-blue-500" : ""}`}>
+                    Phim sắp chiếu
+                  </button>
+                </li>
+              </ul>
+              <div className="tabContent">
+                {airing ? <NowAiring cinema={cinemas[cinemaIndex]} /> : <ComingSoon cinema={cinemas[cinemaIndex]} />}
+              </div>
+              </>
+              )
+            }
           </div>
         </div>
       </div>

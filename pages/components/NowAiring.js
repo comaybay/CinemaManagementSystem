@@ -2,42 +2,52 @@ import { useEffect, useState } from "react";
 import useQuery from "../../utils/useQuery"
 import MovieCard from './MovieCard';
 
-export default function NowAiring() {
-  const [movieCount, setMovieCount] = useState(0);
+export default function NowAiring({cinema}) {
+  const query = (supabase) => {
+    const today = new Date().toISOString().split('T')[0]
+    return supabase.from('schedules').select(`
+        id, date, cinema_id,
+        movies(id, name, english_name, img_url)
+      `)
+      .eq("date", today)
+      .eq("cinema_id", cinema.id)
+      .single();
+  };
+
   const [{ isLoading: isMoviesLoading, result: movies }, setQuery] = useQuery(
-    supabase => {
-      const today = new Date().toISOString().split('T')[0]
-      return supabase.from("movies").select(`
-        id, name, english_name, img_url,
-        schedules!inner (date)
-      `, {count: 'exact'})
-      .eq("schedules.date", today)
-      .limit(6);
-    },
+    query,
     result => {
+      console.log(result)
       setMovieCount(result.count);
-      return result.data;
+      return result.data.movies;
     }
   );
+
+  const [limit, setLimit] = useState(0);
+
+  useEffect(() => {
+    setQuery(query, result => {
+      return result.data.movies;
+    });
+  }, [cinema])
 
   useEffect(() => {
     if (isMoviesLoading) 
       return;
-
-    setShowButton(movieCount > 6 && movies.length <= 6)
+    
+    setLimit(l => Math.min(l + 6, movies.length));
   }, [isMoviesLoading])
 
   const [showButton, setShowButton] = useState(true);
 
+  useEffect(() => {
+    if (!isMoviesLoading) {
+      setShowButton(limit !== movies.length);
+    }
+  }, [limit, isMoviesLoading])
+
   const handleSeeMore = _ => {
-    setQuery(supabase => {
-        const today = new Date().toISOString().split('T')[0]
-        return supabase.from("movies").select(`
-          id, name, english_name, img_url,
-          schedules!inner (date)
-        `)
-        .eq("schedules.date", today);
-      });
+    setLimit(l => Math.min(l + 6, movies.length));
   } 
 
   return (
@@ -45,7 +55,7 @@ export default function NowAiring() {
       <div className="movieBox">
         {isMoviesLoading  && <p className="mx-auto block text-3xl text-blue-700">Đang tải...</p>}
         {!isMoviesLoading && movies.length === 0 && <p className="mx-auto block text-3xl text-blue-700">Hôm nay không có lịch chiếu phim</p> }
-        {!isMoviesLoading && movies.map(m => <MovieCard key={m.id} movie={m} />)}
+        {!isMoviesLoading && movies.slice(0, limit).map(m => <MovieCard key={m.id} movie={m} />)}
       </div>
       <div className="flex flex-row-reverse mb-10">
         {

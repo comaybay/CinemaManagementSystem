@@ -7,7 +7,7 @@ export default function Schedule({ schedule }) {
     <div className="text-slate-800">
       <button className="w-full py-4 px-10 bg-slate-300 hover:bg-slate-400 font-semibold"
         onClick={() => setToggle(t => !t)}>
-          Ngày {new Date(schedule.date).toLocaleDateString()}
+          Ngày {new Date(schedule.date).toLocaleDateString()}, ({schedule.movie_showtimes.length} phim)
       </button>
       { toggle && schedule.movie_showtimes.map(ms => {
           const movie = ms.movies;

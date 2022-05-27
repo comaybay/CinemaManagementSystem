@@ -12,7 +12,7 @@ export default function Admin() {
 
 
   return (
-    <div className="flex justify-center text-3xl w-full my-10">
+    <div className="flex flex-col items-center space-y-10 text-3xl w-full my-10">
       {isAdmin ? (
         <h1 className="text-6xl font-bold text-red-700 self-center justify-self-center">Bạn không có quyền xem trang này</h1>
       ) : (
