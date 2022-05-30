@@ -33,8 +33,6 @@ export default function CinemaSection({cinema}) {
     }
     //Nếu lịch đã tồn tại, xóa hết phim vào lịch hôm đó của rạp
     else {
-      console.log(error);
-
       const res = await supabase.from("schedules").select("id").eq("date", date).eq("cinema_id", cinema.id).single();
       schedule = res.data;
       await supabase.from("movie_showtimes").delete().match({schedule_id: schedule.id});

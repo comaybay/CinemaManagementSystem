@@ -6,7 +6,8 @@ export default function ComingSoon({cinema}) {
   const querySchedules = supabase => {
     const format = d => d.toISOString().split('T')[0]
     const today = new Date()
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1);
+    lastDay.setMilliseconds(-1);
     return supabase.from('schedules').select(`
         id, date, cinema_id,
         movies(id, name, english_name, img_url)
@@ -44,8 +45,6 @@ export default function ComingSoon({cinema}) {
       setSelectedSchedule(newComingSoonSchedule);
     }
   }, [isSchedulesLoading])
-
-  console.log(selectedSchedule);
 
   return (
     <div className="tab-pane active">

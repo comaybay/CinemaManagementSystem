@@ -6,29 +6,20 @@ export default function NowAiring({cinema}) {
   const query = (supabase) => {
     const today = new Date().toISOString().split('T')[0]
     return supabase.from('schedules').select(`
-        id, date, cinema_id,
         movies(id, name, english_name, img_url)
       `)
       .eq("date", today)
       .eq("cinema_id", cinema.id)
-      .single();
   };
 
-  const [{ isLoading: isMoviesLoading, result: movies }, setQuery] = useQuery(
-    query,
-    result => {
-      console.log(result)
-      setMovieCount(result.count);
-      return result.data.movies;
-    }
-  );
+  const resultSelect = result => result.data.length > 0 ? result.data[0].movies : [];
+
+  const [{ isLoading: isMoviesLoading, result: movies }, setQuery] = useQuery(query, resultSelect);
 
   const [limit, setLimit] = useState(0);
 
   useEffect(() => {
-    setQuery(query, result => {
-      return result.data.movies;
-    });
+    setQuery(query, resultSelect);
   }, [cinema])
 
   useEffect(() => {
