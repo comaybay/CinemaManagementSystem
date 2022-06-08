@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
 import useQuery from '../../utils/useQuery'
+import ConfirmOrder from './components/ConfirmOrder';
 import SelectSeats from './components/SelectSeats';
+import SelectSnacks from './components/SelectSnacks';
 import SelectTickets from './components/SelectTicket';
 
 export default function Buy() {
@@ -29,8 +31,11 @@ export default function Buy() {
 
   const [singleSeat, setSingleSeat] = useState(0);
   const [doubleSeat, setDoubleSeat] = useState(0);
-  const [seatNames, setSeatNames] = useState(0);
+  const [selectedSingleSeats, setSelectedSingleSeats] = useState([]);
+  const [selectedDoubleSeats, setSelectedDoubleSeats] = useState([]);
+  const [selectedSnacks, setSelectedSnacks] = useState([]);
   const [ticketTotalPrice, setTicketTotalPrice] = useState(0);
+  const [snacksTotalPrice, setSnacksTotalPrice] = useState(0);
 
   const handleGoBack = () => setStep(s => s - 1);
 
@@ -42,8 +47,19 @@ export default function Buy() {
   }
 
   const handleDoneSelectSeats = res => {
-    setSeatNames(res.seatNames);
+    setSelectedSingleSeats([...res.selectedSingleSeats]);
+    setSelectedDoubleSeats([...res.selectedDoubleSeats]);
     setStep(s => s + 1);
+  }
+
+  const handleDoneSelectSnacks = res => {
+    setSelectedSnacks([...res.selectedSnacks]);
+    setSnacksTotalPrice(res.totalPrice);
+    setStep(s => s + 1);
+  }
+
+  const handleDoneConfirmOrder = () => {
+    //TODO
   }
 
   return (
@@ -63,12 +79,25 @@ export default function Buy() {
             onDone={handleDoneSelectTickets} />
         )}
         {step === 1 && (
-          <SelectSeats takenTickets={takenTickets}
+          <SelectSeats initialSelectedSingleSeats={selectedSingleSeats} initialSelectedDoubleSeats={selectedDoubleSeats}
+            takenTickets={takenTickets}
             singleSeatCount={cinema.single_seat_count} doubleSeatCount={cinema.double_seat_count}
             maxSingleSeat={singleSeat} maxDoubleSeat={doubleSeat}
             onDone={handleDoneSelectSeats} onGoBack={handleGoBack} />
-        )
-        }
+        )}
+        {step === 2 && (
+          <SelectSnacks initialSelectedSnacksAmounts={selectedSnacks.map(s => s.amount)} 
+            onDone={handleDoneSelectSnacks} onGoBack={handleGoBack} />
+        )}
+        {step === 3 && (
+          <ConfirmOrder onDone={handleDoneConfirmOrder} onGoBack={handleGoBack} 
+            selectedSingleSeats={selectedSingleSeats}
+            selectedDoubleSeats={selectedDoubleSeats}
+            selectedSnacks={selectedSnacks}
+            ticketTotalPrice={ticketTotalPrice}
+            snacksTotalPrice={snacksTotalPrice}
+          />
+        )}
       </div>
     </div>
   )

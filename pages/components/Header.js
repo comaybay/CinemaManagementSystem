@@ -5,13 +5,12 @@ import supabase from "../../utils/supabase";
 import Link from "next/link";
 
 export default function Header() {
-  const [userEmail, setUserEmail] = useState("loading...");
   const { isProfileLoading, profile } = useUserProfile();
   const router = useRouter();
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    router.reload();
+    router.push("/");
   }
 
   return (

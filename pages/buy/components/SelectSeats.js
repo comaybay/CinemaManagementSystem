@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../../components/Button";
 
-export default function SelectSeats({ takenTickets, maxSingleSeat, maxDoubleSeat, singleSeatCount, doubleSeatCount, onDone, onGoBack }) {
+export default function SelectSeats({ initialSelectedSingleSeats, initialSelectedDoubleSeats, takenTickets, maxSingleSeat, maxDoubleSeat, singleSeatCount, doubleSeatCount, onDone, onGoBack }) {
   const [layoutSingleSeat] = useState(() => makeLayout(singleSeatCount, 12));
   const [layoutDoubleSeat] = useState(() => makeLayout(doubleSeatCount, 6, "D"));
   
@@ -16,10 +16,10 @@ export default function SelectSeats({ takenTickets, maxSingleSeat, maxDoubleSeat
     return layout;
   }
 
-  const [selectedSingleSeatCount, setSelectedSingleSeatCount] = useState(maxSingleSeat);
-  const [selectedDoubleSeatCount, setSelectedDoubleSeatCount] = useState(maxDoubleSeat);
-  const [selectedSingleSeats, setSelectedSingleSeats] = useState([]);
-  const [selectedDoubleSeats, setSelectedDoubleSeats] = useState([]);
+  const [selectedSingleSeatCount, setSelectedSingleSeatCount] = useState(initialSelectedSingleSeats.length > 0 ? 0 : maxSingleSeat);
+  const [selectedDoubleSeatCount, setSelectedDoubleSeatCount] = useState(initialSelectedDoubleSeats.length > 0 ? 0 : maxDoubleSeat);
+  const [selectedSingleSeats, setSelectedSingleSeats] = useState(initialSelectedSingleSeats);
+  const [selectedDoubleSeats, setSelectedDoubleSeats] = useState(initialSelectedDoubleSeats);
 
   function handleSelectHelper(seat, seatCount, setterSeats, setterCount) {
     setterSeats(seats => {
@@ -49,7 +49,7 @@ export default function SelectSeats({ takenTickets, maxSingleSeat, maxDoubleSeat
     const baseStyle = "w-[55px] text-3xl p-2 rounded-lg border-2 font-semibold"
     const style = "text-gray-400 border-gray-400 bg-gray-200"
     return (
-      <button disabled className={`${baseStyle} ${style} ${index === 6 ? 'ml-20 mr-2' : 'mx-2'}`}>
+      <button disabled key={seat} className={`${baseStyle} ${style} ${index === 6 ? 'ml-20 mr-2' : 'mx-2'}`}>
         {seat}
       </button>) 
   }
@@ -74,7 +74,7 @@ export default function SelectSeats({ takenTickets, maxSingleSeat, maxDoubleSeat
     const selected = "bg-sky-700 border-sky-900 text-white hover:bg-sky-900"
     const style = selectedSingleSeats.includes(seat) ? selected : notSelected;
     return (
-      <button className={`${baseStyle} ${style} ${index === 6 ? 'ml-20 mr-2' : 'mx-2'}`}
+      <button key={seat} className={`${baseStyle} ${style} ${index === 6 ? 'ml-20 mr-2' : 'mx-2'}`}
         onClick={() => handleSelectSingleSeat(seat)}>
         {seat}
       </button>) 
@@ -84,7 +84,7 @@ export default function SelectSeats({ takenTickets, maxSingleSeat, maxDoubleSeat
     const baseStyle = "w-[120px] text-3xl p-2 rounded-lg border-2 font-semibold"
     const style = "text-gray-400 border-gray-400 bg-gray-200"
     return (
-      <button disabled className={`${baseStyle} ${style} ${index === 6 ? 'ml-20 mr-2' : 'mx-2'}`}>
+      <button disabled key={seat} className={`${baseStyle} ${style} ${index === 6 ? 'ml-20 mr-2' : 'mx-2'}`}>
         {seat}
       </button>)
   }
@@ -110,7 +110,7 @@ export default function SelectSeats({ takenTickets, maxSingleSeat, maxDoubleSeat
     const style = selectedDoubleSeats.includes(seat) ? selected : notSelected;
 
     return (
-      <button className={`${baseStyle} ${style} ${index === 3 ? 'ml-20 mr-2' : 'mx-2'}`}
+      <button key={seat} className={`${baseStyle} ${style} ${index === 3 ? 'ml-20 mr-2' : 'mx-2'}`}
         onClick={() => handleSelectDoubleSeat(seat)}>
         {seat}
       </button>)
@@ -150,8 +150,8 @@ export default function SelectSeats({ takenTickets, maxSingleSeat, maxDoubleSeat
           </div>
           <div className="mt-2">
           {
-            layoutSingleSeat.map(row => (
-              <div className="flex mt-2">
+            layoutSingleSeat.map((row, index) => (
+              <div key={index} className="flex mt-2">
                 {
                   row.map(createSingleSeat)
                 }
@@ -160,8 +160,8 @@ export default function SelectSeats({ takenTickets, maxSingleSeat, maxDoubleSeat
           }
           <div className="mt-4">
             {
-              layoutDoubleSeat.map(row => (
-                <div className="flex mt-2">
+              layoutDoubleSeat.map((row, index) => (
+                <div key={index} className="flex mt-2">
                   {
                     row.map(createDoubleSeat)
                   }
