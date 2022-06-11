@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
+import supabase from '../../utils/supabase';
 import useQuery from '../../utils/useQuery'
+import useUserProfile from '../../utils/useUserProfile';
 import ConfirmOrder from './components/ConfirmOrder';
+import OrderComplete from './components/OrderComplete';
 import SelectSeats from './components/SelectSeats';
 import SelectSnacks from './components/SelectSnacks';
 import SelectTickets from './components/SelectTicket';
@@ -9,7 +12,8 @@ import SelectTickets from './components/SelectTicket';
 export default function Buy() {
   const router = useRouter();
   const { showtimeId, cinemaId, time } = router.query;
-  const [{ isLoading, result}, setQuery] = useQuery();
+  const [{ isLoading, result }, setQuery] = useQuery();
+  const {user} = useUserProfile();
 
   const cinema = result?.schedules.cinemas;
   const movie = result?.movies;
@@ -22,8 +26,11 @@ export default function Buy() {
         id,
         movies(name),
         schedules(date, cinemas(name, single_seat_count, double_seat_count)),
-        tickets(seat_name)
-      `).eq("id", showtimeId).single())
+        tickets(seat_name, time)
+      `)
+      .eq("id", showtimeId).single()
+      .eq("tickets.time", time)
+      )
     }
   }, [showtimeId]);
 
@@ -58,8 +65,20 @@ export default function Buy() {
     setStep(s => s + 1);
   }
 
-  const handleDoneConfirmOrder = () => {
-    //TODO
+  const handleDoneConfirmOrder = async () => {
+    const { data: receipts } = await supabase.from("receipts").insert([{date: new Date().toISOString(), user_id: user.id}]);
+    const receiptId = receipts[0].id; 
+    const tP = supabase.from("tickets").insert(
+      [
+        ...selectedSingleSeats.map(s => ({ seat_name: s, movie_showtime_id: showtimeId, ticket_type_id: 1, receipt_id: receiptId, time })),
+        ...selectedDoubleSeats.map(s => ({ seat_name: s, movie_showtime_id: showtimeId, ticket_type_id: 2, receipt_id: receiptId, time })),
+      ]
+    );
+    const sP = supabase.from("receipt_snacks").insert(selectedSnacks.map(s => ({ receipt_id: receiptId, snack_id: s.id, quantity: s.amount})));
+    
+    await tP;
+    await sP;
+    setStep(s => s + 1);
   }
 
   return (
@@ -98,6 +117,7 @@ export default function Buy() {
             snacksTotalPrice={snacksTotalPrice}
           />
         )}
+        {step === 4 && (<OrderComplete />)}
       </div>
     </div>
   )

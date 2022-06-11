@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useUserProfile from "../../../utils/useUserProfile"
 import Button from "../../components/Button";
 
@@ -10,6 +11,7 @@ export default function ConfirmOrder({
   snacksTotalPrice
  }) {
   const { isProfileLoading, user, profile} = useUserProfile();
+  const [clicked, setClicked] = useState(false);
 
   return (
     <div className="text-3xl text-slate-700 mx-auto w-[800px]" >
@@ -28,7 +30,7 @@ export default function ConfirmOrder({
               <div className="flex items-baseline space-x-2 mt-3">
                 <p className="text-blue-800 font-semibold shrink-0">Ghế đơn:</p>
                 <div className="flex flex-wrap space-x-2">
-                  {selectedSingleSeats.map(s => (<div className="px-4 mt-2 py-2 rounded-lg bg-sky-700 text-white">{s}</div>))}
+                  {selectedSingleSeats.map(s => (<div key={s} className="px-4 mt-2 py-2 rounded-lg bg-sky-700 text-white">{s}</div>))}
                 </div>
               </div>
             )}
@@ -36,7 +38,7 @@ export default function ConfirmOrder({
               <div className="flex items-baseline space-x-2 mt-3">
                 <p className="text-blue-800 font-semibold shrink-0">Ghế đôi:</p>
                 <div className="flex flex-wrap space-x-2">
-                  {selectedDoubleSeats.map(s => (<div className="px-4 mt-2 py-2 rounded-lg bg-indigo-700 text-white">{s}</div>))}
+                  {selectedDoubleSeats.map(s => (<div key={s} className="px-4 mt-2 py-2 rounded-lg bg-indigo-700 text-white">{s}</div>))}
                 </div>
               </div>
             )}
@@ -88,7 +90,12 @@ export default function ConfirmOrder({
                   Quay lại
                 </Button>
             </div>
-            <button className="px-20 py-4 text-4xl font-semibold rounded-md text-white bg-green-700 hover:bg-green-800 disabled:bg-slate-700">
+            <button disabled={clicked} className="px-20 py-4 text-4xl font-semibold rounded-md text-white bg-green-700 hover:bg-green-800 disabled:bg-slate-700"
+              onClick={() => {
+                setClicked(true);
+                onDone();
+              }}
+            >
               Thanh toán
             </button>
           </div>

@@ -18,6 +18,7 @@ export default function SelectSnacks({ initialSelectedSnacksAmounts, onDone, onG
     const selectedSnacks = snackOrderAmounts.map((amount, index) => {
       const snack = snacks[index];
       return {
+        id: snack.id,
         name: snack.name,
         price: snack.price,
         amount 
