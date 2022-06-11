@@ -31,12 +31,23 @@ export default function Movie() {
         `)
         .eq("schedules.movie_showtimes.movie_id", id)
         .eq("schedules.date", date),
-        result => result.data.filter(d => d.schedules.length > 0).map(d => ({
-          cinemaName: d.name,
-          cinemaId: d.id,
-          showtimeId: d.schedules[0].movie_showtimes[0].id,
-          times: d.schedules[0].movie_showtimes[0].times
-        }))
+        result => {
+          const res = []; 
+          
+          result.data.filter(d => d.schedules.length > 0).forEach(d => {
+            const showTime = d.schedules[0].movie_showtimes[0] ?? null;
+            if (showTime) {
+              res.push({
+                cinemaName: d.name,
+                cinemaId: d.id,
+                showtimeId: showTime.id,
+                times: showTime.times
+              });
+            }
+          })
+
+          return res;
+        }
       )
     }
   }, [date, id]);
@@ -75,7 +86,7 @@ export default function Movie() {
               <span className="text-blue-700">Diễn viên: </span>
               {movie.actors}
             </p>
-            <p style={{ display: "-webkit-box", "-webkit-line-clamp": "8", "-webkit-box-orient": "vertical", overflow: "hidden" }}>
+            <p style={{ display: "-webkit-box", WebkitLineClamp: "8", WebkitBoxOrient: "vertical", overflow: "hidden" }}>
               <span className="text-blue-700">Nội dung phim: </span>
               {movie.description}
             </p>
@@ -102,12 +113,12 @@ export default function Movie() {
           }
             {!isShowtimeLoading &&
               showtimes.map(showtime => (
-                <div className="mt-8 min-w-[400px]">
+                <div key={showtime.id} className="mt-8 min-w-[400px]">
                   <p className="text-3xl text-white bg-blue-900 px-4 py-2">{showtime.cinemaName}</p>
                   <div className="px-2 py-3 bg-slate-200">
                     {showtime.times.map(t => (
-                      <Link href={`/buy/${showtime.showtimeId}?time=${t.slice(0, -3)}&cinemaId=${showtime.cinemaId}`}>
-                        <button key={t} className="px-4 py-2 ml-2 rounded-md bg-blue-600 hover:bg-blue-900 text-white text-3xl font-semibold">
+                      <Link key={t} href={`/buy/${showtime.showtimeId}?time=${t.slice(0, -3)}&cinemaId=${showtime.cinemaId}`}>
+                        <button className="px-4 py-2 ml-2 rounded-md bg-blue-600 hover:bg-blue-900 text-white text-3xl font-semibold">
                           {t.slice(0, -3)}
                         </button>
                       </Link>

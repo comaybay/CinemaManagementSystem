@@ -83,7 +83,7 @@ export default function Buy() {
 
   return (
     <div className="w-2/3 mx-auto">
-      {movie && date && (
+      {movie && date && step !== 4 && (
         <>
           <p className="py-4 font-semibold text-5xl text-center text-white bg-blue-900">Đặt vé</p>
           <p className="py-4 text-4xl text-center text-white bg-blue-800">Tên phim: {movie.name}</p>

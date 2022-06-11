@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="grow">
+      <div className="grow min-h-[400px]">
         <Component {...pageProps} />
       </div>
       <Footer />

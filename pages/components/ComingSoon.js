@@ -27,7 +27,7 @@ export default function ComingSoon({cinema}) {
 
   const [comingSoonSchedule, setComingSoonSchedule] = useState({movies: []})
   
-  const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const [selectedSchedule, setSelectedSchedule] = useState({ movies: [] });
   
   useEffect(() => {
     if (!isSchedulesLoading) {
@@ -48,8 +48,12 @@ export default function ComingSoon({cinema}) {
 
   return (
     <div className="tab-pane active">
-      {isSchedulesLoading && <p className="mx-auto block text-3xl text-blue-700">Đang tải...</p>}
-      {!isSchedulesLoading  && (
+      <div className="movieBox w-full">
+        {isSchedulesLoading && <p className="mx-auto text-3xl text-blue-700 my-20">Đang tải...</p>}
+        {(!isSchedulesLoading && selectedSchedule.movies.length <= 0) && <p className="mx-auto text-3xl text-blue-700 my-20">Hiện tại chưa có phim sắp chiếu</p>}
+      </div>
+
+      {!isSchedulesLoading && selectedSchedule.movies.length > 0 && (
         <>
           <div className="text-3xl flex space-x-4 items-center">
             <button 
@@ -68,7 +72,6 @@ export default function ComingSoon({cinema}) {
             )}
             </div>
           <div className="movieBox w-full mt-4">
-              {(!selectedSchedule || selectedSchedule.movies.length <= 0) && <p className="mx-auto block text-3xl text-blue-700">Hiện tại chưa có phim sắp chiếu</p>}
               {selectedSchedule && selectedSchedule.movies.map(m => <MovieCard key={m.id} movie={m} />)}
           </div>
         </>
