@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
 import supabase from '../../utils/supabase';
 import useQuery from '../../utils/useQuery'
+import useRedirectIfNotLoggedIn from '../../utils/useRedirectIfNotLoggedIn';
 import useUserProfile from '../../utils/useUserProfile';
 import ConfirmOrder from './components/ConfirmOrder';
 import OrderComplete from './components/OrderComplete';
@@ -10,6 +11,7 @@ import SelectSnacks from './components/SelectSnacks';
 import SelectTickets from './components/SelectTicket';
 
 export default function Buy() {
+  useRedirectIfNotLoggedIn();
   const router = useRouter();
   const { showtimeId, cinemaId, time } = router.query;
   const [{ isLoading, result }, setQuery] = useQuery();

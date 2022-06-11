@@ -9,8 +9,8 @@ export default function Header() {
   const router = useRouter();
 
   const signOut = async () => {
+    await router.push("/");
     await supabase.auth.signOut();
-    router.push("/");
   }
 
   return (
@@ -31,10 +31,10 @@ export default function Header() {
           </Link>
           :
           <ul className="flex space-x-2 items-center">
-            <li > <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
+            <li className="text-blue-800"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
               <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
             </svg></li>
-            <li><p href="#" className="text-3xl" >
+            <li><p href="#" className="text-3xl text-blue-800" >
               {profile.name}
             </p></li>
             {

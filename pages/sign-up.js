@@ -2,8 +2,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react"
 import supabase from "../utils/supabase.js"
+import useUserProfile from "../utils/useUserProfile.js";
 
 export default function SignUp() {
+  const router = useRouter();
+  const { user } = useUserProfile();
+  if (user) {
+    router.replace("/")
+  }
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -12,7 +19,6 @@ export default function SignUp() {
   const [dateOfBirth, setDateOfBirth] = useState("")
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const signUp = async () => {
     if (!(name && email && phoneNumber && password && rePassword && dateOfBirth)) {
