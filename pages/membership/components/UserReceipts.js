@@ -16,8 +16,9 @@ export default function UserReceipts() {
           <div key={r.id} className="p-4 mb-4 border-2">
             <p className="font-semibold text-slate-700">{new Date(r.date + "Z").toLocaleString()}</p>
             <p className="text-blue-700">Mã biên lai: <span className="font-semibold">{r.receipt_code}</span></p>
-            <p>Tên phim: <span className="font-semibold">{r.movie_showtimes[0].movies.name}</span></p>
+            <p>Tên phim: <span className="font-semibold">{r.movie_showtimes[0].movies.name}</span></p>  
             <p>Mã phim: <span className="font-semibold">{r.movie_showtimes[0].movies.id}</span></p>
+            <p className="text-blue-700">Giờ chiếu: <span className="font-semibold">{r.tickets[0].  time.slice(0, -3)}</span></p>
             <p className="text-red-700">Tổng tiền: <span className="font-semibold">{formatPrice(r.price)}</span></p>
           </div>
         ))

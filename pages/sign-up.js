@@ -16,24 +16,17 @@ export default function SignUp() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("")
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
   const signUp = async () => {
-    if (!(name && email && phoneNumber && password && rePassword && dateOfBirth)) {
-      setErrorMsg(`Chưa điền ${name ? "" : ", tên"}${email ? "" : ", email"}${password ? "" : ", mật khẩu"}${dateOfBirth ? "" : ", ngày sinh"}${rePassword ? "" : ", chưa nhập lại mật khẩu"}`.replace(", ", ""))
+    if (!(name && email && phoneNumber && password && rePassword)) {
+      setErrorMsg(`Chưa điền ${name ? "" : ", tên"}${email ? "" : ", email"}${password ? "" : ", mật khẩu"}${rePassword ? "" : ", chưa nhập lại mật khẩu"}`.replace(", ", ""))
       return;
     }
 
     if (password != rePassword) {
       setErrorMsg("Mật khẩu nhập lại không khớp với mật khẩu")
-      return;
-    }
-
-    const dateArr = dateOfBirth.split("/");
-    if (dateArr.length < 3) {
-      setErrorMsg("Ngày sinh không hợp lệ")
       return;
     }
 
@@ -51,7 +44,6 @@ export default function SignUp() {
       const { error } = await supabase.from("profiles").insert([{
         id: user.id,
         name,
-        date_of_birth: `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`,
         phone_number: phoneNumber
       }]);
 
@@ -107,18 +99,12 @@ export default function SignUp() {
                             <div maxLength="256" className="col-md-6 col-sm-6 col-xs-6 second-col"><input type="password" placeholder="Xác nhận mật khẩu" value={rePassword} onChange={e => setRePassword(e.target.value)} required="required" className="login ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
                             </div>
                           </div>
-                          <div className="row birthday-signup">
-                            <div className="col-md-12 col-sm-12 col-xs-12">
-                              <input type="text" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)} className="login register-input btn-select-input" placeholder="Ngày sinh (dd/mm/yyyy)" />
-                            </div>
-                          </div>
                           <p className="text-red-700 text-lg mb-2">{errorMsg}</p>
                           {
                             loading ?
                               <button disabled={loading} className="btn primary input"><i ng-show="isSubmit" className="fa fa-pulse fa-spinner ng-hide"></i>Đang kiểm tra...</button>
                               :
                               <button onClick={signUp} className="btn primary input"><i ng-show="isSubmit" className="fa fa-pulse fa-spinner ng-hide"></i>Đăng ký</button>
-
                           }
                         </form>
                       </div>

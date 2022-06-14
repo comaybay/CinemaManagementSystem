@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react'
-import Benefit from './components/benefit';
-import UserInformation from './components/userInformation';
+import Benefit from './components/Benefit';
+import UserInformation from './components/UserInformation';
 import supabase from '../../utils/supabase';
 import useRedirectIfNotLoggedIn from '../../utils/useRedirectIfNotLoggedIn';
 import useUserProfile from '../../utils/useUserProfile';
-import UserReceipts from './components/UserReceipt';
+import UserReceipts from './components/UserReceipts';
 
 export default function Membership() {
   const benefit = useMemo(() => <Benefit />, [])
