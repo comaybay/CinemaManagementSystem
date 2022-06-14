@@ -60,7 +60,7 @@ export default function SignIn() {
                         <p className="text-red-700 text-lg mb-2">{errorMsg}</p>
                         {
                           loading ?
-                            <button disabled="true" className="btn primary input"><i ng-show="isSubmit" className="fa fa-pulse fa-spinner ng-hide"></i>Đang kiểm tra...</button>
+                            <button disabled={loading} className="btn primary input"><i ng-show="isSubmit" className="fa fa-pulse fa-spinner ng-hide"></i>Đang kiểm tra...</button>
                             :
                             <button onClick={signIn} className="btn primary input"><i ng-show="isSubmit" className="fa fa-pulse fa-spinner ng-hide"></i>Đăng nhập</button>
 

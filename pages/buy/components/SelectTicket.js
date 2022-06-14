@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import formatPrice from '../../../utils/formatPrice';
 import useQuery from '../../../utils/useQuery';
 import Button from '../../components/Button';
 
@@ -25,8 +26,8 @@ export default function SelectTickets({ singleSeat: initialSingleSeat, doubleSea
         </div> 
         {num === maxTicketNum && <p className='text-center text-red-700 text-xl'>Đã đạt số lượng vé có thể mua</p>}
       </td>
-      <td className="py-2 text-slate-700 text-3xl text-center border border-white">{price} vnđ</td>
-      <td className="py-2 text-slate-700 text-3xl text-center border border-white">{num * price} vnđ</td>
+      <td className="py-2 text-slate-700 text-3xl text-center border border-white">{formatPrice(price)}</td>
+      <td className="py-2 text-slate-700 text-3xl text-center border border-white">{formatPrice(num * price)}</td>
     </tr>
   )
   
@@ -54,7 +55,7 @@ export default function SelectTickets({ singleSeat: initialSingleSeat, doubleSea
         </table>
 
         <div className="mt-8 flex justify-between space-x-8 items-center">
-            <p className="text-4xl text-red-700">Tổng tiền: {totalPrice} vnđ</p>
+            <p className="text-4xl text-red-700">Tổng tiền: {formatPrice(totalPrice)}</p>
             <Button disabled={singleSeatNum == 0 && doubleSeatNum == 0} onClick={() => onDone({
             singleSeatNum,
             doubleSeatNum,

@@ -19,7 +19,7 @@ export default function Buy() {
 
   const cinema = result?.schedules.cinemas;
   const movie = result?.movies;
-  const takenTickets = result?.tickets.map(ticket => ticket.seat_name);
+  const takenTickets = result?.tickets;
   const date = result?.schedules?.date;
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function Buy() {
         id,
         movies(name),
         schedules(date, cinemas(name, single_seat_count, double_seat_count)),
-        tickets(seat_name, time)
+        tickets(seat_name, ticket_type_id, time)
       `)
       .eq("id", showtimeId).single()
       .eq("tickets.time", time)
@@ -37,7 +37,7 @@ export default function Buy() {
   }, [showtimeId]);
 
   const [step, setStep] = useState(0);
-
+  
   const [singleSeat, setSingleSeat] = useState(0);
   const [doubleSeat, setDoubleSeat] = useState(0);
   const [selectedSingleSeats, setSelectedSingleSeats] = useState([]);
@@ -45,6 +45,7 @@ export default function Buy() {
   const [selectedSnacks, setSelectedSnacks] = useState([]);
   const [ticketTotalPrice, setTicketTotalPrice] = useState(0);
   const [snacksTotalPrice, setSnacksTotalPrice] = useState(0);
+  const [receiptCode, setReceiptCode] = useState(0);
 
   const handleGoBack = () => setStep(s => s - 1);
 
@@ -67,8 +68,14 @@ export default function Buy() {
     setStep(s => s + 1);
   }
 
+  function randomRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   const handleDoneConfirmOrder = async () => {
-    const { data: receipts } = await supabase.from("receipts").insert([{date: new Date().toISOString(), user_id: user.id}]);
+    const rc = randomRange(10000, 99999);
+    setReceiptCode(rc);
+    const { data: receipts } = await supabase.from("receipts").insert([{ date: new Date().toISOString(), user_id: user.id, receipt_code: rc, price: ticketTotalPrice + snacksTotalPrice}]);
     const receiptId = receipts[0].id; 
     const tP = supabase.from("tickets").insert(
       [
@@ -96,12 +103,13 @@ export default function Buy() {
       <div className="my-10">
         {step === 0 && cinema && (
           <SelectTickets singleSeat={singleSeat} doubleSeat={doubleSeat}
-            singleSeatCount={cinema.single_seat_count} doubleSeatCount={cinema.double_seat_count}
+            singleSeatCount={cinema.single_seat_count - takenTickets.filter(t => t.ticket_type_id == 1).length}
+            doubleSeatCount={cinema.double_seat_count - takenTickets.filter(t => t.ticket_type_id == 2).length}
             onDone={handleDoneSelectTickets} />
         )}
         {step === 1 && (
           <SelectSeats initialSelectedSingleSeats={selectedSingleSeats} initialSelectedDoubleSeats={selectedDoubleSeats}
-            takenTickets={takenTickets}
+            takenTickets={takenTickets.map(t => t.seat_name)}
             singleSeatCount={cinema.single_seat_count} doubleSeatCount={cinema.double_seat_count}
             maxSingleSeat={singleSeat} maxDoubleSeat={doubleSeat}
             onDone={handleDoneSelectSeats} onGoBack={handleGoBack} />
@@ -119,7 +127,7 @@ export default function Buy() {
             snacksTotalPrice={snacksTotalPrice}
           />
         )}
-        {step === 4 && (<OrderComplete />)}
+        {step === 4 && (<OrderComplete receiptCode={receiptCode} />)}
       </div>
     </div>
   )

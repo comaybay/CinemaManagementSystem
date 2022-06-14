@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import formatPrice from '../../../utils/formatPrice';
 import useQuery from '../../../utils/useQuery';
 import Button from '../../components/Button';
 
@@ -74,8 +75,8 @@ export default function SelectSnacks({ initialSelectedSnacksAmounts, onDone, onG
                           })}>+</button>
                       </div>
                     </td>
-                    <td className="py-2 text-slate-700 text-3xl text-center border border-white">{snack.price} vnđ</td>
-                    <td className="py-2 text-slate-700 text-3xl text-center border border-white">{snackOrderAmounts[index] * snack.price} vnđ</td>
+                    <td className="py-2 text-slate-700 text-3xl text-center border border-white">{formatPrice(snack.price)}</td>
+                    <td className="py-2 text-slate-700 text-3xl text-center border border-white">{formatPrice(snackOrderAmounts[index] * snack.price)}</td>
                   </tr>
                 ))
               }
@@ -83,7 +84,7 @@ export default function SelectSnacks({ initialSelectedSnacksAmounts, onDone, onG
 
           </table>
 
-          <p className="mt-4 text-4xl text-red-700">Tổng tiền: {calculateTotalPrice()} vnđ</p>
+          <p className="mt-4 text-4xl text-red-700">Tổng tiền: {formatPrice(calculateTotalPrice())}</p>
 
           <div className="flex justify-between mt-4">
             <Button onClick={() => onGoBack()}>

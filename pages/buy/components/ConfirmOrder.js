@@ -1,4 +1,5 @@
 import { useState } from "react";
+import formatPrice from "../../../utils/formatPrice";
 import useUserProfile from "../../../utils/useUserProfile"
 import Button from "../../components/Button";
 
@@ -42,7 +43,7 @@ export default function ConfirmOrder({
                 </div>
               </div>
             )}
-            <p className="mt-2 font-semibold text-red-700">Tổng tiền vé: {ticketTotalPrice} vnđ</p>
+            <p className="mt-2 font-semibold text-red-700">Tổng tiền vé: {formatPrice(ticketTotalPrice)}</p>
           </div>
           {selectedSnacks.length > 0 && (
             <>
@@ -69,21 +70,21 @@ export default function ConfirmOrder({
                             <td className="text-center font-semibold py-2 text-slate-700 text-3xl">
                               {snack.amount}
                             </td>
-                            <td className="py-2 font-semibold text-red-700 text-3xl text-center">{snack.price} vnđ</td>
-                            <td className="py-2 font-semibold text-red-700 text-3xl text-center">{snack.amount * snack.price} vnđ</td>
+                            <td className="py-2 font-semibold text-red-700 text-3xl text-center">{formatPrice(snack.price)}</td>
+                            <td className="py-2 font-semibold text-red-700 text-3xl text-center">{formatPrice(snack.amount * snack.price)}</td>
                           </tr>
                         ))
                       }
                     </tbody>
 
                   </table>
-                <p className="mt-2 font-semibold text-red-700">Tổng tiền đồ ăn: {snacksTotalPrice} vnđ</p>
+                <p className="mt-2 font-semibold text-red-700">Tổng tiền đồ ăn: {formatPrice(snacksTotalPrice)}</p>
               </div>
             </>
           )}
 
           <div className="border-b-2 my-4 border-blue-800"/>
-          <p className="mt-4 text-4xl font-bold text-red-700">Tổng cộng: {ticketTotalPrice + snacksTotalPrice} vnđ</p>
+          <p className="mt-4 text-4xl font-bold text-red-700">Tổng cộng: {formatPrice(ticketTotalPrice + snacksTotalPrice)}</p>
           <div className="flex items-end justify-between mt-4">
             <div>
                 <Button onClick={() => onGoBack()}>

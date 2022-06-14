@@ -5,10 +5,12 @@ import UserInformation from './components/userInformation';
 import supabase from '../../utils/supabase';
 import useRedirectIfNotLoggedIn from '../../utils/useRedirectIfNotLoggedIn';
 import useUserProfile from '../../utils/useUserProfile';
+import UserReceipts from './components/UserReceipt';
 
 export default function Membership() {
   const benefit = useMemo(() => <Benefit />, [])
   const userInformation = useMemo(() => <UserInformation />, [])
+  const userReceipts = useMemo(() => <UserReceipts />, [])
   const [section, setSection] = useState(benefit);
 
   const {isProfileLoading, user} = useUserProfile();
@@ -26,11 +28,18 @@ export default function Membership() {
                     </button>
                   </li>
                 {user && ( 
+                  <>
                     <li >
                     <button onClick={() => setSection(userInformation)} className={`hover:text-blue-500 ${section === userInformation ? "text-blue-500" : ""}`}>
                         Thành viên
                       </button>
                     </li>
+                    <li >
+                      <button onClick={() => setSection(userReceipts)} className={`hover:text-blue-500 ${section === userReceipts ? "text-blue-500" : ""}`}>
+                        Lịch sử mua vé      
+                      </button>
+                    </li>
+                  </>
                     )
                   }
                 {!user && (

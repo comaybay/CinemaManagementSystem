@@ -16,7 +16,7 @@ export default function Header() {
   return (
     <>
       <div className="header flex justify-between mx-32">
-        <img id="logoHeader" src="./img/galaxyS-logo.png" alt="logo" />
+        <img id="logoHeader" src="/img/galaxyS-logo.png" alt="logo" />
         {!profile ?
           !isProfileLoading &&
           <Link href="/sign-in" >

@@ -25,8 +25,8 @@ export default () => {
         return;
       }
 
-      setIsProfileLoading(true);
       const {data: profile} = await supabase.from("profiles").select("*").eq("id", user.id).single();
+      setIsProfileLoading(true);
       setProfile(profile);
       setIsProfileLoading(false);
     })();
