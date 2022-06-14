@@ -81,7 +81,7 @@ export default function UserInformation() {
           <div className="row">
             <div className="col-md-5 col-sm-7 col-xs-7">
               <label>Họ &amp; Tên</label>
-              <input className="login" value={name} onChange={e => setName(e.target.value)} />
+              <input maxLength="256" className="login" value={name} onChange={e => setName(e.target.value)} />
             </div>
 
           </div>
@@ -92,17 +92,17 @@ export default function UserInformation() {
             </div>
             <div className="col-md-2 col-sm-4 col-xs-4">
               <label>Giới tính</label>
-                <input className="login" value={sex} onChange={e => setSex(e.target.value)} />
+              <input maxLength="256" className="login" value={sex} onChange={e => setSex(e.target.value)} />
             </div>
             <div className="col-md-3 col-sm-12 col-xs-12">
               <label>Số điện thoại</label>
-                <input className="login" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+              <input maxLength="14" className="login" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
             </div>
           </div>
           <div className="row row-info">
             <div className="col-md-5">
               <label>Địa chỉ</label>
-                <input className="login" value={address} onChange={e => setAddress(e.target.value)}/>
+              <input maxLength="256" className="login" value={address} onChange={e => setAddress(e.target.value)}/>
             </div>
             <div className="col-md-3 col-sm-6 col-xs-6">
               <label>Tỉnh/Thành Phố</label>
@@ -241,7 +241,7 @@ export default function UserInformation() {
           <div className="row">
             <div className="col-md-5">
                 <label>Email</label>
-                <input className="login" value={email} onChange={e => setEmail(e.target.value)} />
+              <input maxLength="256" className="login" value={email} onChange={e => setEmail(e.target.value)} />
               <input />
             </div>
           </div>
@@ -264,9 +264,9 @@ export default function UserInformation() {
                   </div>
               </div>
               <div id="box-changepass">
-                <input value={password} onChange={e => setPassword(e.target.value)} placeholder="Mật khẩu hiện tại" type="password" ng-model="user.oldPassword" className="login ng-pristine ng-untouched ng-valid ng-empty"/>
-                <input value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Mật khẩu mới" type="password" ng-model="user.newPassword" className="login ng-pristine ng-untouched ng-valid ng-empty"/>
-                <input value={renewPassword} onChange={e => setRenewPassword(e.target.value)} placeholder="Xác nhận mật khẩu" type="password" ng-model="user.confirmNewPassword" className="login ng-pristine ng-untouched ng-valid ng-empty"/>
+                <input maxLength="256" value={password} onChange={e => setPassword(e.target.value)} placeholder="Mật khẩu hiện tại" type="password" ng-model="user.oldPassword" className="login ng-pristine ng-untouched ng-valid ng-empty"/>
+                <input maxLength="256" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Mật khẩu mới" type="password" ng-model="user.newPassword" className="login ng-pristine ng-untouched ng-valid ng-empty"/>
+                <input maxLength="256" value={renewPassword} onChange={e => setRenewPassword(e.target.value)} placeholder="Xác nhận mật khẩu" type="password" ng-model="user.confirmNewPassword" className="login ng-pristine ng-untouched ng-valid ng-empty"/>
                     </div>
                   </div>
               </div>

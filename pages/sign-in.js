@@ -55,8 +55,8 @@ export default function SignIn() {
                   <div className="tab-pane active">
                     <div className="login-tab-wrapper">
                       <form ng-submit="submit()" className="login-form ng-pristine ng-valid-email ng-invalid ng-invalid-required">
-                        <input placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required="required" className="login ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required" />
-                        <input placeholder="Mật khẩu" value={password} onChange={e => setPassword(e.target.value)} type="password" required="required" className="login ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
+                        <input maxLength="256" placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required="required" className="login ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required" />
+                        <input maxLength="256" placeholder="Mật khẩu" value={password} onChange={e => setPassword(e.target.value)} type="password" required="required" className="login ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
                         <p className="text-red-700 text-lg mb-2">{errorMsg}</p>
                         {
                           loading ?

@@ -55,7 +55,6 @@ export default function CinemaSection({cinema}) {
     const { error: insertError } = await supabase.from("movie_showtimes").insert(rows);
 
     if (insertError) {
-      console.error(insertError);
       setErrorMsg("Thêm thất bại");
       setGenerating(false);
       return;
